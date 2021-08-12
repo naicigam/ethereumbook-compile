@@ -8,13 +8,13 @@ I do not own nor created the book.
 
 - HTML
 - PDF
+- EPUB3
 
 ## Requirements
 
 - [Asciidoctor](https://asciidoctor.org/)
 - [Asciidoctor PDF](https://github.com/asciidoctor/asciidoctor-pdf)
 - [Asciidoctor Epub3](https://github.com/asciidoctor/asciidoctor-epub3)
-- [PDFtk command line](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/)
 
 ## Usage
 

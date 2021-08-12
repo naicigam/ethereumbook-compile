@@ -21,7 +21,6 @@ cp -R $ETHEREUMBOOK_DIR/images $ASCIIDOC_DIR
 cp -R $ETHEREUMBOOK_DIR/code $ASCIIDOC_DIR
 
 cp -R $ETHEREUMBOOK_DIR/*.asciidoc $ASCIIDOC_DIR
-rm $ASCIIDOC_DIR/book.asciidoc
 
 # --------------------------------------------------------------
 # HTML
@@ -34,7 +33,7 @@ rm -f -R $HTML_DIR
 echo "Generate HTML version..."
 mkdir -p $HTML_DIR/images
 cp -R $ETHEREUMBOOK_DIR/images $HTML_DIR
-asciidoctor -D $HTML_DIR $ASCIIDOC_DIR/*.asciidoc
+asciidoctor -D $HTML_DIR $ASCIIDOC_DIR/book.asciidoc
 
 # --------------------------------------------------------------
 # PDF
@@ -45,15 +44,19 @@ echo "Deleting old PDF version..."
 rm -f -R $PDF_DIR
 
 echo "Generate PDF version..."
-asciidoctor-pdf -D $PDF_DIR/chapters $ASCIIDOC_DIR/*.asciidoc
-pdftk $PDF_DIR/chapters/preface.pdf \
-        $PDF_DIR/chapters/0*.pdf \
-        $PDF_DIR/chapters/1*.pdf \
-        $PDF_DIR/chapters/appdx-*.pdf \
-        $PDF_DIR/chapters/github_contrib.pdf \
-        $PDF_DIR/chapters/glossary.pdf \
-    cat output $PDF_DIR/ethereumbook.pdf
+asciidoctor-pdf -D $PDF_DIR $ASCIIDOC_DIR/book.asciidoc
 
-echo "Updating PDF bookmarks..."
-pdftk $PDF_DIR/ethereumbook.pdf dump_data > $PDF_DIR/bookmarks.info
-pdftk $PDF_DIR/ethereumbook.pdf update_info $PDF_DIR/bookmarks.info output $PDF_DIR/ethereumbook.pdf
+#echo "Updating PDF bookmarks..."
+#pdftk $PDF_DIR/ethereumbook.pdf dump_data > $PDF_DIR/bookmarks.info
+#pdftk $PDF_DIR/ethereumbook.pdf update_info $PDF_DIR/bookmarks.info output $PDF_DIR/ethereumbook.pdf
+
+# --------------------------------------------------------------
+# EPUB3
+
+EPUB3_DIR=./epub3
+
+echo "Deleting old EPUB3 version..."
+rm -f -R $EPUB3_DIR
+
+echo "Generate EPUB3 version..."
+asciidoctor-epub3 -D $EPUB3_DIR $ASCIIDOC_DIR/book.asciidoc
